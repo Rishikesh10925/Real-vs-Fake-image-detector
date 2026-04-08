@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Large Datasets
+Train/
+Test/
+real_and_fake_face/
+real_and_fake_face_detection/
+
+# Large Files & Heavy Models
+*.zip
+*.h5
+*.keras
+
+# Streamlit
+.streamlit/
+
