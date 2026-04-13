@@ -1,0 +1,7 @@
+FINAL RESULTS SUMMARY
+========================================
+Training Accuracy:  0.9370 (93.70%)
+Testing Accuracy:   0.5993 (59.93%)
+Training Loss:      0.4794
+Testing Loss:       1.2533
+Accuracy Gap:       0.3376 (33.76%)

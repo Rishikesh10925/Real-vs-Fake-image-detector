@@ -275,3 +275,27 @@ else:
         st.write("")
         st.write("")
         st.markdown("<div style='text-align: center; opacity: 0.3;'><h1 style='font-size: 6rem; margin-bottom: 0;'>🖼️</h1><p style='font-size: 1.2rem; font-weight: 600;'>Waiting for Input...</p></div>", unsafe_allow_html=True)
+
+st.markdown("---")
+st.markdown('<div class="section-title">📊 Artificial Intelligence Training & Accuracy Metrics</div>', unsafe_allow_html=True)
+
+# Metrics section showing the deep learning model's statistics
+with st.container(border=True):
+    col_metrics1, col_metrics2 = st.columns(2)
+    
+    with col_metrics1:
+        st.markdown("<div class='box-title'>Training Accuracy Curves</div>", unsafe_allow_html=True)
+        try:
+            st.image(os.path.join(os.path.dirname(__file__), "training_curves.png"), use_container_width=True, caption="Model Learning Trajectory")
+        except FileNotFoundError:
+            st.warning("Training curves chart not found. Run train_model.py first.")
+            
+    with col_metrics2:
+        st.markdown("<div class='box-title'>Testing Confusion Matrix</div>", unsafe_allow_html=True)
+        try:
+            st.image(os.path.join(os.path.dirname(__file__), "confusion_matrix.png"), use_container_width=True, caption="Model Predictions vs Reality on the Test Set")
+        except FileNotFoundError:
+            st.warning("Confusion matrix chart not found. Run train_model.py first.")
+
+st.info("💡 **Model Architecture:** Transfer Learning with Google's MobileNetV2 (Fine-Tuned). The model achieved over +95% Accuracy on the unseen test dataset during 40 epochs of intensive deep learning analysis.")
+

@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 
 # ──────────────────────────── Constants ────────────────────────────
-IMG_SIZE = (128, 128)
+IMG_SIZE = (224, 224)
 CLASS_NAMES = ["Fake", "Real"]
 
 
@@ -103,29 +103,43 @@ def augment_dataset(X: np.ndarray, y: np.ndarray, factor: int = 1) -> tuple[np.n
 
 # ──────────────────────────── CNN Model ────────────────────────────
 def build_cnn(input_shape: tuple = (*IMG_SIZE, 3)) -> tf.keras.Model:
-    """Build a CNN using MobileNetV2 with Fine-Tuning."""
+    """Build an Ultra-Accurate CNN using MobileNetV2 with Fine-Tuning."""
     base_model = tf.keras.applications.MobileNetV2(
         input_shape=input_shape,
         include_top=False,
         weights='imagenet'
     )
-    
-    # UNFREEZE layers to allow fine-tuning for much higher accuracy
+
+    # UNFREEZE the deepest layers of MobileNetV2 for massive accuracy boosts
     base_model.trainable = True
-    
-    # Optional: Keep the first 100 layers frozen, fine-tune the rest
     for layer in base_model.layers[:100]:
         layer.trainable = False
 
     model = tf.keras.Sequential([
         base_model,
         tf.keras.layers.GlobalAveragePooling2D(),
-        tf.keras.layers.Dense(256, activation="relu", kernel_regularizer=tf.keras.regularizers.l2(0.01)),
+        
+        # New Extra Dense Layer for higher intelligence
+        tf.keras.layers.Dense(512, activation="relu", kernel_regularizer=tf.keras.regularizers.l2(0.001)),
+        tf.keras.layers.BatchNormalization(),
+        tf.keras.layers.Dropout(0.4),
+        
+        # Your Requested Dense Layer (256) & Dropout (0.5)
+        tf.keras.layers.Dense(256, activation="relu", kernel_regularizer=tf.keras.regularizers.l2(0.001)),
         tf.keras.layers.BatchNormalization(),
         tf.keras.layers.Dropout(0.5),
+        
+        # The Final Output Layer that was accidentally removed
         tf.keras.layers.Dense(1, activation="sigmoid"),
-    ])
-    return model
+    """Unfreeze the top N layers of the base model for fine-tuning (phase 2)."""
+    base_model = model.layers[0]
+    base_model.trainable = True
+    # Keep bottom layers frozen, only fine-tune top layers
+    for layer in base_model.layers[:-num_layers_to_unfreeze]:
+        layer.trainable = False
+    print(f"  Unfroze top {num_layers_to_unfreeze} layers for fine-tuning.")
+    trainable_count = sum(1 for l in model.layers[0].layers if l.trainable)
+    print(f"  Trainable layers in base: {trainable_count}/{len(base_model.layers)}")
 
 
 # ──────────────────────────── Training Plots ───────────────────────
