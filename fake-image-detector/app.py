@@ -86,7 +86,7 @@ st.markdown('<div class="sub-title">PREMIUM AI IMAGE AUTHENTICITY DASHBOARD</div
 # ──────────────────────────── Sidebar ──────────────────────────────
 with st.sidebar:
     st.header("ℹ️ About NeuralVision")
-    st.write("NeuralVision utilizes a deep Convolutional Neural Network (CNN) to detect AI-generated and manipulated images with high accuracy.")
+    st.write("NeuralVision uses a fine-tuned MobileNetV2 classifier to flag manipulated face images. Held-out test accuracy is about 60%, so treat its predictions as experimental.")
     st.divider()
     st.write("**How to use:**")
     st.write("1. Upload a portrait or face image.")

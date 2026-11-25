@@ -21,3 +21,9 @@ real_and_fake_face_detection/
 # Streamlit
 .streamlit/
 
+
+# Local logs and editor files
+*.log
+.DS_Store
+.vscode/
+.idea/
